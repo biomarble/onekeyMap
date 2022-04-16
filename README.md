@@ -13,6 +13,7 @@ remotes::install_github('biomarble/onekeyMap',dependencies=T,upgrade = F)
 ### For Users in China
 
 ```R
+if(!requireNamespace('remotes',quietly = T)) install.packages('remotes',update=F)
 if(!requireNamespace('onekeyMap',quietly = T)){
   tryCatch({
     remotes::install_github('biomarble/onekeyMap',dependencies=T,upgrade = F)
