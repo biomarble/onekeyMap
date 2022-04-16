@@ -18,7 +18,7 @@ if(!requireNamespace('onekeyMap',quietly = T)){
   tryCatch({
     remotes::install_github('biomarble/onekeyMap',dependencies=T,upgrade = F)
   },error = function(e){
-    remotes::install_url('https://download.fastgit.org/biomarble/PlantNGSTools/archive/main.zip',dependencies = T,upgrade = F) 
+    remotes::install_url('https://download.fastgit.org/biomarble/onekeyMap/archive/main.zip',dependencies = T,upgrade = F) 
   })
 }
 ```
