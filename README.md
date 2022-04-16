@@ -22,7 +22,7 @@ if(!requireNamespace('onekeyMap',quietly = T)){
 }
 ```
 
-**Thanks to [fastgit - the mirror speeder for GitHub.com.](https://fastgit.org/) **
+Thanks to [fastgit - the mirror speeder for GitHub.com.](https://fastgit.org/)
 
 ## Functions
 
