@@ -135,9 +135,9 @@ mapWorld_point=function(data,title="",inputType="coordinate",bwmap=F,style="roun
         shapebyv=as.factor(shapebyv[,1])
     }
     if(bwmap){
-        baseMap=baseMap +geom_sf(fill='white',color='grey70',data=world,linetype = "solid", size = 0.1,show.legend = F )+scale_fill_manual(values =defaultColor,na.value="white")
+        baseMap=baseMap +geom_sf(fill='white',color='grey70',data=world,linetype = "solid", size = 0.1,show.legend = F )+scale_fill_manual(values =defaultColorWorld,na.value="white")
     }else{
-        baseMap=baseMap +geom_sf(aes(fill=as.factor(mapcolor13)),color='grey70',data=world,linetype = "solid", size = 0.1,show.legend = F )+scale_fill_manual(values =defaultColor,na.value="white")
+        baseMap=baseMap +geom_sf(aes(fill=as.factor(mapcolor13)),color='grey70',data=world,linetype = "solid", size = 0.1,show.legend = F )+scale_fill_manual(values =defaultColorWorld,na.value="white")
     }
     if(!is.null(colorby) && !is.null(shapeby)){
         baseMap=baseMap+geom_sf(data=data,aes(color=colorbyv,shape=shapebyv),alpha=alpha,size = size)
