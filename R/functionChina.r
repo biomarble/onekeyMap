@@ -20,13 +20,13 @@ mapChina_pie_province=function(data,title="",pieName=NULL,axis.text.size=9,dataC
     }
     names(pieColor)=dataCol
 
-    use=mapdata[pmatch(data[,NameCol],mapdata$name),]%>%
+    use=mapchinaData[pmatch(data[,NameCol],mapchinaData$name),]%>%
         st_drop_geometry()%>%
         select('center')%>%unlist()%>%
         matrix(ncol=2,byrow = T)%>%as.data.frame()%>%
         cbind(data,.)%>%st_as_sf( coords = c("V1", "V2"), crs = 4326, agr = "constant")
     plotdata=cbind(use%>%st_coordinates(),use%>%st_drop_geometry())
-    baseMap=ggplot(mapdata) +
+    baseMap=ggplot(mapchinaData) +
             geom_sf(aes(fill=adcode),linetype = "solid", size = 0.1,show.legend = F)+
             scale_fill_manual(values =defaultColor)+new_scale_fill()+
             geom_scatterpie(aes(r=pieSize,x=X, y=Y), data=plotdata,cols=dataCol,color='grey50')+
@@ -57,7 +57,7 @@ mapChina_pie_province=function(data,title="",pieName=NULL,axis.text.size=9,dataC
               panel.grid.major = element_line(color = gray(.5), linetype = "dashed", size = 0.3),
               panel.background = element_rect(fill = "#f0f8ff")
         )
-    #g=g+geom_text_repel(data=mapdata,aes(label = name,geometry = geometry),size=3, stat = "sf_coordinates",na.rm=T,show.legend=F,point.padding = 0,box.padding = 0)
+    #g=g+geom_text_repel(data=mapchinaData,aes(label = name,geometry = geometry),size=3, stat = "sf_coordinates",na.rm=T,show.legend=F,point.padding = 0,box.padding = 0)
     return(g)
 }
 
@@ -71,13 +71,13 @@ mapChina_pie_province=function(data,title="",pieName=NULL,axis.text.size=9,dataC
 
 mapChina_fill_province=function(data,label,colorTrans=NULL,title="",highColor='red',lowColor='yellow',naColor="white",axis.text.size=9,legend.text.size=10,legend.title.size=11){
     colnames(data) = c('id','value')
-    data$adcode={mapdata[pmatch(data$id,mapdata$name),]%>%st_drop_geometry()}[,'adcode']
-    mapdata=left_join(mapdata,data,by=c('adcode'="adcode"))
+    data$adcode={mapchinaData[pmatch(data$id,mapchinaData$name),]%>%st_drop_geometry()}[,'adcode']
+    mapchinaData=left_join(mapchinaData,data,by=c('adcode'="adcode"))
 
-    baseMap=ggplot(mapdata) +geom_sf(aes(fill=value),linetype = "solid", size = 0.1,show.legend = T)
+    baseMap=ggplot(mapchinaData) +geom_sf(aes(fill=value),linetype = "solid", size = 0.1,show.legend = T)
     if(!is.null(colorTrans)){
         if(colorTrans =="percent"){
-          br=pretty(mapdata$value,n=5)
+          br=pretty(mapchinaData$value,n=5)
             baseMap=baseMap+scale_fill_gradient(high=highColor,low=lowColor,na.value=naColor,breaks=br,labels=paste0(br*100,'%'))
         }else{
             baseMap=baseMap+scale_fill_gradient(high=highColor,low=lowColor,na.value=naColor,trans=colorTrans)
@@ -113,7 +113,7 @@ mapChina_fill_province=function(data,label,colorTrans=NULL,title="",highColor='r
               panel.grid.major = element_line(color = gray(.5), linetype = "dashed", size = 0.3),
               panel.background = element_rect(fill = "#f0f8ff")
         )
-    #g=g+geom_text_repel(data=mapdata,aes(label = name,geometry = geometry),size=3, stat = "sf_coordinates",na.rm=T,show.legend=F,point.padding = 0,box.padding = 0)
+    #g=g+geom_text_repel(data=mapchinaData,aes(label = name,geometry = geometry),size=3, stat = "sf_coordinates",na.rm=T,show.legend=F,point.padding = 0,box.padding = 0)
     return(g)
 }
 
@@ -134,7 +134,7 @@ mapChina_point=function(data,title="",colorby=NULL,shapeby=NULL,colorTrans="log1
         shapebyv=shapebyv[,1]
     }
     data=data%>%st_as_sf( coords = c("longitude", "latitude"), crs = 4326, agr = "constant")
-    baseMap=ggplot(mapdata) +geom_sf(aes(fill=adcode),linetype = "solid", size = 0.1,show.legend = F)+
+    baseMap=ggplot(mapchinaData) +geom_sf(aes(fill=adcode),linetype = "solid", size = 0.1,show.legend = F)+
         scale_fill_manual(values =defaultColor)
     if(!is.null(colorby) && !is.null(shapeby)){
         baseMap=baseMap+geom_sf(data=data,aes(color=colorbyv,shape=shapebyv),size = size)
@@ -166,6 +166,6 @@ mapChina_point=function(data,title="",colorby=NULL,shapeby=NULL,colorTrans="log1
               panel.grid.major = element_line(color = gray(.5), linetype = "dashed", size = 0.3),
               panel.background = element_rect(fill = "#f0f8ff")
         )
-    #g=g+eom_text_repel(data=mapdata,aes(label = name,geometry = geometry),size=3, stat = "sf_coordinates",na.rm=T,show.legend=F,point.padding = 0,box.padding = 0)
+    #g=g+eom_text_repel(data=mapchinaData,aes(label = name,geometry = geometry),size=3, stat = "sf_coordinates",na.rm=T,show.legend=F,point.padding = 0,box.padding = 0)
     return(g)
 }
