@@ -5,6 +5,8 @@
 # Session Data files
 .RData
 
+
+
 # User-specific files
 .Ruserdata
 
@@ -37,3 +39,8 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+
+
+#backup file
+data/*.bk
